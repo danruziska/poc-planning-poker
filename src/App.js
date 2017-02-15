@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import Header from '../src/components/header/header';
+import Header from '../src/components/header';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
