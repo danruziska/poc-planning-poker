@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Header from '../src/components/header';
+import ActionChoice from '../src/components/action-choice';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
@@ -10,9 +11,7 @@ class App extends Component {
       <MuiThemeProvider>
         <div>
             <Header />
-            <p className="App-intro">
-              To get started, edit <code>src/App.js</code> and save to reload.
-            </p>
+            <ActionChoice />
         </div>   
       </MuiThemeProvider>  
     );
