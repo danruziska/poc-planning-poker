@@ -1,6 +1,5 @@
 import React from 'react';
 import AppBar from 'material-ui/AppBar';
-import FlatButton from 'material-ui/FlatButton';
 import { primaryColors } from '../styles/base/system-colors';
 
 export default class Header extends React.PureComponent{
@@ -13,13 +12,20 @@ export default class Header extends React.PureComponent{
 
     render(){         
         var componentStyle = {
-            backgroundColor: primaryColors.primaryBackground            
+            backgroundColor: primaryColors.primaryBackground,
+            color:primaryColors.primaryTextColor                                 
         };    
+
+        var tableIdStyle = {
+            color: primaryColors.primaryTextColor
+        }
         
         return(
             <AppBar title="React Header"        
-                style={componentStyle}             
-                iconElementRight={<FlatButton label={this.state.tableId} />}      
+                style={componentStyle}
+                titleStyle={componentStyle}    
+                showMenuIconButton={false}  
+                iconElementRight={<p style={tableIdStyle}>{this.state.tableId}</p>}      
             />      
         );
     }
