@@ -13,7 +13,7 @@ export default class Room extends React.PureComponent{
             users : []
         }
         this.addUser = this.addUser.bind(this);
-        socket.on('user-joined',(userData)=> this.addUser(userData));
+        socket.on('user-joined',(userData, roomId)=> this.addUser(userData));
     }
 
     componentDidMount(){

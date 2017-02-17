@@ -14,9 +14,10 @@ server.listen(port, function(){
 var realtimeListener = io.listen(server);
 
 realtimeListener.on('connection',function(socket){
-    socket.on('user-joined', function(userData){
+    socket.on('user-joined', function(userData, roomId){
+        socket.join(roomId);
         if(socket){
-            socket.broadcast.emit('user-joined', userData);
+            realtimeListener.in(roomId).emit('user-joined', userData);
         }
     });
 });

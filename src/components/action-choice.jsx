@@ -12,6 +12,7 @@ const socket = io('http://localhost:3001');
 
 export default class ActionChoice extends React.PureComponent{
     render(){  
+        var randomValue = randomString();
         var key = 1; 
         var user = {
             id: key,
@@ -20,14 +21,14 @@ export default class ActionChoice extends React.PureComponent{
 
         function teste2(){
             console.log('emitindo evento...');
-            socket.emit('user-joined', user);
+            socket.emit('user-joined', user,randomValue);
             key++;
         }
 
         var columnStyle = {
             textAlign:'center'
         };
-        var randomValue = randomString();
+        
 
         return(
             <Grid>
