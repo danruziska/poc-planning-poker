@@ -13,16 +13,10 @@ server.listen(port, function(){
 
 var realtimeListener = io.listen(server);
 
-var tableSocket;
-
 realtimeListener.on('connection',function(socket){
-    socket.on('table-connect', function(){
-        tableSocket = socket;
-    });
-
-    socket.on('phone-throw-card', function(cardData){
-        if(tableSocket){
-            tableSocket.emit('phone-throw-card', cardData);
+    socket.on('user-joined', function(userData){
+        if(socket){
+            socket.broadcast.emit('user-joined', userData);
         }
     });
 });

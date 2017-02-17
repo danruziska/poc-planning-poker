@@ -7,10 +7,23 @@ import { Link } from 'react-router';
 import { randomString } from '../utils/randomString';
 
 const {Grid, Row, Col} = require('react-flexbox-grid');
-
+const io = require('socket.io-client');
+const socket = io('http://localhost:3001');
 
 export default class ActionChoice extends React.PureComponent{
-    render(){    
+    render(){  
+        var key = 1; 
+        var user = {
+            id: key,
+            name: 'Danilo'
+        }
+
+        function teste2(){
+            console.log('emitindo evento...');
+            socket.emit('user-joined', user);
+            key++;
+        }
+
         var columnStyle = {
             textAlign:'center'
         };
@@ -38,6 +51,7 @@ export default class ActionChoice extends React.PureComponent{
                                     style={{marginLeft:'10px'}} 
                                     buttonStyle={{backgroundColor:defaultButton.backgroundColor}} 
                                     labelStyle={{color:defaultButton.color}} 
+                                    onClick={teste2}
                         />
                     </Col>                                        
                 </Row>                                

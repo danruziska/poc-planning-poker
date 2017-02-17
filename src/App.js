@@ -9,7 +9,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      roomId : ""
+      roomId : "None"
     }
     this.updateRoomId = this.updateRoomId.bind(this)
   }
