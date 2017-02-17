@@ -10,7 +10,6 @@ const {Grid, Row, Col} = require('react-flexbox-grid');
 
 
 export default class ActionChoice extends React.PureComponent{
-
     render(){    
         var columnStyle = {
             textAlign:'center'
@@ -21,8 +20,8 @@ export default class ActionChoice extends React.PureComponent{
             <Grid>
                 <Row style={{marginTop:'40px'}}>
                     <Col style={columnStyle}>
-                        <Link to={"/table/" + randomValue}>
-                            <RaisedButton label="New Table" 
+                        <Link to={"/room/" + randomValue}>
+                            <RaisedButton label="New Room" 
                                 buttonStyle={{backgroundColor:defaultButton.backgroundColor}} 
                                 labelStyle={{color:defaultButton.color}}
                             />   
@@ -31,11 +30,11 @@ export default class ActionChoice extends React.PureComponent{
                 </Row>
                 <Row style={{margin:'10px'}}>                  
                     <Col style={columnStyle}>     
-                        <TextField    floatingLabelFocusStyle={{color:actionChoiceTextField.color}}
+                        <TextField  floatingLabelFocusStyle={{color:actionChoiceTextField.color}}
                                     underlineFocusStyle={{borderBottomColor :actionChoiceTextField.color}}
                                     floatingLabelText="Code"
                         />                   
-                        <RaisedButton label="Join Table" 
+                        <RaisedButton label="Join Room" 
                                     style={{marginLeft:'10px'}} 
                                     buttonStyle={{backgroundColor:defaultButton.backgroundColor}} 
                                     labelStyle={{color:defaultButton.color}} 
