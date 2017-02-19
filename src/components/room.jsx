@@ -29,7 +29,7 @@ export default class Room extends React.PureComponent{
     }
 
     addUser(newUser){
-        console.log('chamou addUser ' + newUser);
+        console.log('chamou addUser ' + newUser.name);
         var newUserArray = this.state.users.slice();
         newUserArray.push(newUser);
         this.setState({

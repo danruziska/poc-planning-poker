@@ -19,7 +19,7 @@ export default class ActionChoice extends React.PureComponent{
             randomValue:randomString(),
             user:{
                 id:'',
-                name:'Danilo'
+                name:''
             }
         };
         this.teste2 = this.teste2.bind(this);
@@ -31,10 +31,17 @@ export default class ActionChoice extends React.PureComponent{
         });
     }
 
+    handleNameFieldChange = (event) =>{
+        this.setState({
+            user:{name:event.target.value}
+        });
+    }
+
     generateRoom = (event) => {
         this.setState({
             randomValue: randomString()
         });
+
     }
 
     teste2(){
@@ -43,10 +50,12 @@ export default class ActionChoice extends React.PureComponent{
         this.setState({
             user:{
                 id: uuid,
-                name:'Danilo'
+                name:this.state.user.name
             }
+        }, function(){
+            console.log('user id: ' + this.state.user.id);
+            socket.emit('join-room', this.state.user,this.state.roomIdField);
         });
-        socket.emit('join-room', this.state.user,this.state.roomIdField);
     }
 
     render(){  
@@ -69,14 +78,26 @@ export default class ActionChoice extends React.PureComponent{
                     </Col>                    
                 </Row>
                 <Row style={{margin:'10px'}}>                  
-                    <Col style={columnStyle}>     
-                        <TextField  
-                                    value={this.state.roomIdField}
-                                    onChange={this.handleTextFieldChange}
-                                    floatingLabelFocusStyle={{color:actionChoiceTextField.color}}
-                                    underlineFocusStyle={{borderBottomColor :actionChoiceTextField.color}}
-                                    floatingLabelText="Code"
-                        />                   
+                    <Col style={columnStyle}>  
+                        <Row>
+                            <TextField  
+                                value={this.state.user.name}
+                                onChange={this.handleNameFieldChange}
+                                floatingLabelFocusStyle={{color:actionChoiceTextField.color}}
+                                underlineFocusStyle={{borderBottomColor :actionChoiceTextField.color}}
+                                floatingLabelText="Nickname"
+                            />
+                        </Row> 
+                        <Row>
+                            <TextField  
+                                value={this.state.roomIdField}
+                                onChange={this.handleTextFieldChange}
+                                floatingLabelFocusStyle={{color:actionChoiceTextField.color}}
+                                underlineFocusStyle={{borderBottomColor :actionChoiceTextField.color}}
+                                floatingLabelText="Code"
+                            />  
+                        </Row>  
+
                         <RaisedButton label="Join Room" 
                                     style={{marginLeft:'10px'}} 
                                     buttonStyle={{backgroundColor:defaultButton.backgroundColor}} 
