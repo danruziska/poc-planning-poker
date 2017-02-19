@@ -14,9 +14,16 @@ server.listen(port, function(){
 var realtimeListener = io.listen(server);
 
 realtimeListener.on('connection',function(socket){
-    socket.on('user-joined', function(userData, roomId){
+    socket.on('room', function(roomId){
+        console.log('evento room recebido pelo cliente');
         socket.join(roomId);
+    });
+
+
+
+    socket.on('join-room', function(userData, roomId){
         if(socket){
+            console.log('emitindo evento user-joined para a sala: ' + roomId);
             realtimeListener.in(roomId).emit('user-joined', userData);
         }
     });
