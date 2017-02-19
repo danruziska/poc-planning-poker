@@ -3,7 +3,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { defaultButton } from '../styles/ui-components/button';
 import { actionChoiceTextField } from '../styles/ui-components/textfield';
 import TextField from 'material-ui/TextField';
-import { Link } from 'react-router';
+import { browserHistory  } from 'react-router';
 import { randomString } from '../utils/randomString';
 
 const {Grid, Row, Col} = require('react-flexbox-grid');
@@ -16,7 +16,7 @@ export default class ActionChoice extends React.PureComponent{
         super();
         this.state = {
             roomIdField : '',
-            randomValue:randomString(),
+            randomValue:'',
             user:{
                 id:'',
                 name:''
@@ -40,8 +40,9 @@ export default class ActionChoice extends React.PureComponent{
     generateRoom = (event) => {
         this.setState({
             randomValue: randomString()
+        }, function(){
+            browserHistory.push('/room/' + this.state.randomValue);
         });
-
     }
 
     teste2(){
@@ -68,13 +69,13 @@ export default class ActionChoice extends React.PureComponent{
             <Grid>
                 <Row style={{marginTop:'40px'}}>
                     <Col style={columnStyle}>
-                        <Link to={"/room/" + this.state.randomValue}>
+              
                             <RaisedButton label="New Room" 
                                 onClick={this.generateRoom}
                                 buttonStyle={{backgroundColor:defaultButton.backgroundColor}} 
                                 labelStyle={{color:defaultButton.color}}
                             />   
-                        </Link>
+                     
                     </Col>                    
                 </Row>
                 <Row style={{margin:'10px'}}>                  
