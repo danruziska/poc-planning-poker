@@ -56,6 +56,7 @@ export default class ActionChoice extends React.PureComponent{
         }, function(){
             console.log('user id: ' + this.state.user.id);
             socket.emit('join-room', this.state.user,this.state.roomIdField);
+            browserHistory.push('/user/' + this.state.user.name);
         });
     }
 
