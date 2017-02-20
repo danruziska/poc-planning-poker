@@ -13,6 +13,7 @@ export default class Room extends React.PureComponent{
             users : []
         }
         this.addUser = this.addUser.bind(this);
+        this.updateUser = this.updateUser.bind(this);
     }
 
     componentDidMount(){
@@ -22,6 +23,11 @@ export default class Room extends React.PureComponent{
         {
             console.log('novo usuário');
             this.addUser(userData);
+        });
+
+        socket.on('card-sent',(user,cardValue)=>
+        {
+            this.updateUser(user,cardValue);
         });
 
         console.log('emitindo evento room: ' + this.props.params.roomId);
@@ -36,10 +42,23 @@ export default class Room extends React.PureComponent{
            users : newUserArray
         });
     }   
+
+    updateUser(user, cardValue){
+        var newArray = this.state.users.slice();
+        for(var i=0;i<newArray.length;i++){
+            if(newArray[i].id === user.id){
+                newArray[i].cardValue = cardValue;
+            }
+        }
+        this.setState({
+            users: newArray                                                                                                                                                                                              
+        });
+        console.log('updateUser:' + user.id);
+    }
     
     render(){                                  
         const usersList = this.state.users.map((user) =>
-            <Cell key={user.id} is="3 tablet-4 phone-4"><User userName={user.name} /></Cell>
+            <Cell key={user.id} is="3 tablet-4 phone-4"><User userName={user.name} cardValue={user.cardValue} /></Cell>
         );
     
         return(   

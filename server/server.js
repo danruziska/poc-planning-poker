@@ -27,4 +27,11 @@ realtimeListener.on('connection',function(socket){
             realtimeListener.in(roomId).emit('user-joined', userData);
         }
     });
+
+    socket.on('send-card', function(user,roomId,cardValue){
+        if(socket){
+            console.log('server: ' + user.id);
+            realtimeListener.in(roomId).emit('card-sent', user,cardValue);
+        }
+    });
 });

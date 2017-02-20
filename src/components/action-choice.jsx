@@ -19,7 +19,8 @@ export default class ActionChoice extends React.PureComponent{
             randomValue:'',
             user:{
                 id:'',
-                name:''
+                name:'',
+                cardValue:0
             }
         };
         this.teste2 = this.teste2.bind(this);
@@ -51,12 +52,13 @@ export default class ActionChoice extends React.PureComponent{
         this.setState({
             user:{
                 id: uuid,
-                name:this.state.user.name
+                name:this.state.user.name,
+                cardValue: 0
             }
         }, function(){
             console.log('user id: ' + this.state.user.id);
             socket.emit('join-room', this.state.user,this.state.roomIdField);
-            browserHistory.push('/user/' + this.state.user.name);
+            browserHistory.push('/user/' + this.state.user.name + '?userId=' + this.state.user.id + '&roomId=' + this.state.roomIdField);
         });
     }
 
