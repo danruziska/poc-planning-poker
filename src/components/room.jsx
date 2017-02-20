@@ -1,8 +1,6 @@
 import React from 'react';
 import User from './user';
 import { Grid, Row, Cell } from 'react-inline-grid';
-import RaisedButton from 'material-ui/RaisedButton';
-import { defaultButton } from '../styles/ui-components/button';
 const io = require('socket.io-client');
 const socket = io('http://localhost:3001');
 
@@ -56,17 +54,13 @@ export default class Room extends React.PureComponent{
         console.log('updateUser:' + user.id);
     }
     
-    render(){                                  
+    render(){           
         const usersList = this.state.users.map((user) =>
             <Cell key={user.id} is="3 tablet-4 phone-4"><User userName={user.name} cardValue={user.cardValue} /></Cell>
         );
     
         return(   
             <div>
-                <RaisedButton label="Add User" 
-                              buttonStyle={{backgroundColor:defaultButton.backgroundColor}} 
-                              labelStyle={{color:defaultButton.color}}                             
-                            /> 
                 <Grid>
                     <Row is="center">
                         {usersList}                                                
