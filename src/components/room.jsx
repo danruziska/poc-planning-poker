@@ -3,12 +3,15 @@ import User from './user';
 import { Grid, Row, Cell } from 'react-inline-grid';
 const io = require('socket.io-client');
 const socket = io('http://localhost:3001');
+import TextField from 'material-ui/TextField';
+import { actionChoiceTextField } from '../styles/ui-components/textfield';
 
-export default class Room extends React.PureComponent{
+export default class Room extends React.PureComponent{    
     constructor() {
         super();
         this.state = {
-            users : []
+            users : [],
+            totalOfParticipants:0
         }
         this.addUser = this.addUser.bind(this);
         this.updateUser = this.updateUser.bind(this);
@@ -19,25 +22,22 @@ export default class Room extends React.PureComponent{
 
         socket.on('user-joined',(userData)=> 
         {
-            console.log('novo usuário');
             this.addUser(userData);
         });
 
         socket.on('card-sent',(user,cardValue)=>
         {
-            this.updateUser(user,cardValue);
+            this.updateUser(user,cardValue);                            
         });
-
-        console.log('emitindo evento room: ' + this.props.params.roomId);
         socket.emit('room', this.props.params.roomId);
     }
 
     addUser(newUser){
-        console.log('chamou addUser ' + newUser.name);
         var newUserArray = this.state.users.slice();
         newUserArray.push(newUser);
         this.setState({
-           users : newUserArray
+           users: newUserArray,
+           totalOfParticipants: this.state.totalOfParticipants++
         });
     }   
 
@@ -45,13 +45,29 @@ export default class Room extends React.PureComponent{
         var newArray = this.state.users.slice();
         for(var i=0;i<newArray.length;i++){
             if(newArray[i].id === user.id){
-                newArray[i].cardValue = cardValue;
+                newArray[i].newValue = cardValue;
             }
         }
         this.setState({
             users: newArray                                                                                                                                                                                              
+        });    
+
+        if(this.state.users.length === this.state.totalOfParticipants){
+            console.log('atualizar todos');
+            var updatedArray = this.state.users.slice();
+            for(var j=0;j<updatedArray.length;j++){
+                updatedArray[j].cardValue = updatedArray[j].newValue.toString();
+            } 
+            this.setState({
+                users: updatedArray
+            });
+        }   
+    }
+
+    handleTotalParticipantsChange = (event) => {
+         this.setState({
+            totalOfParticipants: event.target.value,
         });
-        console.log('updateUser:' + user.id);
     }
     
     render(){           
@@ -60,12 +76,21 @@ export default class Room extends React.PureComponent{
         );
     
         return(   
-            <div>
+            <div>                
                 <Grid>
                     <Row is="center">
-                        {usersList}                                                
+                        <Cell>
+                            {usersList}     
+                        </Cell>                                              
                     </Row>
                 </Grid>
+                <TextField  
+                    value={this.state.totalOfParticipants}
+                    onChange={this.handleTotalParticipantsChange}
+                    floatingLabelFocusStyle={{color:actionChoiceTextField.color}}
+                    underlineFocusStyle={{borderBottomColor :actionChoiceTextField.color}}
+                    floatingLabelText="Total of participants"
+                />
             </div>                                
         );
     }

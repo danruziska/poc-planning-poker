@@ -7,6 +7,7 @@ import MenuItem from 'material-ui/MenuItem';
 import styles from '../stylesheets/cards.css';
 const {Grid, Row, Col} = require('react-flexbox-grid');
 
+
 const Swipeable = require('react-swipeable');
 const io = require('socket.io-client');
 const socket = io('http://localhost:3001');
@@ -35,6 +36,7 @@ export default class UserContainer extends React.PureComponent{
                 id: this.props.location.query.userId,
                 name: this.props.params.userName
             },
+            cardValue:'1',
             roomId:this.props.location.query.roomId
         })
     }
