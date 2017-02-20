@@ -57,6 +57,7 @@ export default class Room extends React.PureComponent{
             totalUsersInRoom: this.state.users.length,
             totalOfParticipants:0
         });
+        socket.emit('reset-card', this.props.params.roomId);
     }  
 
     updateUser(user, cardValue){

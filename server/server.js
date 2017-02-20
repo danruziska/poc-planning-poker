@@ -34,4 +34,10 @@ realtimeListener.on('connection',function(socket){
             realtimeListener.in(roomId).emit('card-sent', user,cardValue);
         }
     });
+
+    socket.on('reset-card', function(roomId){
+        if(socket){
+            realtimeListener.in(roomId).emit('reset-card');
+        }
+    });
 });

@@ -1,7 +1,5 @@
 import React from 'react';
 import User from './user';
-import RaisedButton from 'material-ui/RaisedButton';
-import { defaultButton } from '../styles/ui-components/button';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import styles from '../stylesheets/cards.css';
@@ -38,7 +36,15 @@ export default class UserContainer extends React.PureComponent{
             },
             cardValue:'1',
             roomId:this.props.location.query.roomId
-        })
+        });
+
+        socket.on('reset-card',()=> 
+        {
+            console.log('resetar cartas');
+            this.resetCard();
+        });    
+
+        socket.emit('room', this.props.location.query.roomId); 
     }
 
     handlecardValueChange = (event) =>{
@@ -53,7 +59,8 @@ export default class UserContainer extends React.PureComponent{
 
     resetCard(){
         this.setState({
-            animationClass:''
+            animationClass:'',
+            cardValue:'1'
         });
     }
 
@@ -97,15 +104,6 @@ export default class UserContainer extends React.PureComponent{
                                 <MenuItem value={40} primaryText="40" />
                             </SelectField> 
                         </Col>                        
-                    </Row>
-                    <Row>
-                        <Col>
-                            <RaisedButton label="Reset" 
-                                buttonStyle={{backgroundColor:defaultButton.backgroundColor}} 
-                                labelStyle={{color:defaultButton.color}} 
-                                onClick={this.resetCard}
-                            />
-                        </Col>
                     </Row>
                 </Grid>                                                                                         
         );
