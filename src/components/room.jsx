@@ -1,20 +1,22 @@
 import React from 'react';
 import User from './user';
 import { Grid, Row, Cell } from 'react-inline-grid';
+import RaisedButton from 'material-ui/RaisedButton';
+import { defaultButton } from '../styles/ui-components/button';
 const io = require('socket.io-client');
 const socket = io('http://localhost:3001');
-import TextField from 'material-ui/TextField';
-import { actionChoiceTextField } from '../styles/ui-components/textfield';
 
 export default class Room extends React.PureComponent{    
     constructor() {
         super();
         this.state = {
             users : [],
-            totalOfParticipants:0
+            totalOfParticipants:0,
+            totalUsersInRoom:0
         }
         this.addUser = this.addUser.bind(this);
         this.updateUser = this.updateUser.bind(this);
+        this.resetRoom = this.resetRoom.bind(this);
     }
 
     componentDidMount(){
@@ -36,10 +38,26 @@ export default class Room extends React.PureComponent{
         var newUserArray = this.state.users.slice();
         newUserArray.push(newUser);
         this.setState({
-           users: newUserArray,
-           totalOfParticipants: this.state.totalOfParticipants++
+           users: newUserArray
         });
-    }   
+
+        this.setState({
+            totalUsersInRoom:this.state.users.length
+        });
+    } 
+
+    resetRoom(){
+        var updatedArray = this.state.users.slice();
+        for(var j=0;j<updatedArray.length;j++){
+            updatedArray[j].cardValue = '?'
+            updatedArray[j].newValue = '?'
+        } 
+        this.setState({
+            users: updatedArray,
+            totalUsersInRoom: this.state.users.length,
+            totalOfParticipants:0
+        });
+    }  
 
     updateUser(user, cardValue){
         var newArray = this.state.users.slice();
@@ -48,18 +66,21 @@ export default class Room extends React.PureComponent{
                 newArray[i].newValue = cardValue;
             }
         }
+        var total = this.state.totalOfParticipants;
+        total+=1;
         this.setState({
-            users: newArray                                                                                                                                                                                              
+            users: newArray,
+            totalOfParticipants: total                                                                                                                                                                                           
         });    
 
-        if(this.state.users.length === this.state.totalOfParticipants){
+        if(this.state.totalUsersInRoom === this.state.totalOfParticipants){
             console.log('atualizar todos');
             var updatedArray = this.state.users.slice();
             for(var j=0;j<updatedArray.length;j++){
                 updatedArray[j].cardValue = updatedArray[j].newValue.toString();
             } 
             this.setState({
-                users: updatedArray
+                users: updatedArray,
             });
         }   
     }
@@ -79,17 +100,14 @@ export default class Room extends React.PureComponent{
             <div>                
                 <Grid>
                     <Row is="center">
-                        <Cell>
-                            {usersList}     
-                        </Cell>                                              
+                        {usersList}                                                
                     </Row>
                 </Grid>
-                <TextField  
-                    value={this.state.totalOfParticipants}
-                    onChange={this.handleTotalParticipantsChange}
-                    floatingLabelFocusStyle={{color:actionChoiceTextField.color}}
-                    underlineFocusStyle={{borderBottomColor :actionChoiceTextField.color}}
-                    floatingLabelText="Total of participants"
+                <RaisedButton label="Reset" 
+                    style={{marginLeft:'10px'}} 
+                    buttonStyle={{backgroundColor:defaultButton.backgroundColor}} 
+                    labelStyle={{color:defaultButton.color}} 
+                    onClick={this.resetRoom}
                 />
             </div>                                
         );

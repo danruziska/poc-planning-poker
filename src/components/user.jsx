@@ -1,7 +1,6 @@
 import React from 'react';
 
 const cardStyle = {
-    position:'relative',
     fontSize:'10em',
     borderStyle:'solid',
     borderRadius:'10px',
