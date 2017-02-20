@@ -10,12 +10,24 @@ const Swipeable = require('react-swipeable');
 const io = require('socket.io-client');
 const socket = io('http://localhost:3001');
 
+const values = [
+    '1',
+    '2',
+    '3',
+    '5',
+    '8',
+    '13',
+    '20',
+    '40'
+]
+
 export default class UserContainer extends React.PureComponent{
 
     constructor() {
         super();
         this.state = {
-            cardValue:'1',
+            currentIndex: 0,
+            cardValue:values[0],
             user:{
                 id:'',
                 name:''
@@ -25,7 +37,9 @@ export default class UserContainer extends React.PureComponent{
         }
         this.sendCard = this.sendCard.bind(this);
         this.swipedUp = this.swipedUp.bind(this);
-        this.resetCard = this.resetCard.bind(this);
+        this.swipedRight = this.swipedRight.bind(this);
+        this.swipedLeft = this.swipedLeft.bind(this);
+        this.resetCard = this.resetCard.bind(this);        
     }
 
     componentDidMount(){
@@ -74,12 +88,34 @@ export default class UserContainer extends React.PureComponent{
         });
     }
 
-    render(){         
+    swipedRight(){        
+        var newIndex = this.state.currentIndex;
+        if(newIndex !== values.length-1){
+            newIndex+=1;
+            this.setState({
+                currentIndex : newIndex,
+                cardValue: values[newIndex]
+            });
+        }
+    }
+
+    swipedLeft(){
+        var newIndex = this.state.currentIndex;
+        if(newIndex !== 0){
+            newIndex-=1;
+            this.setState({
+                currentIndex : newIndex,
+                cardValue: values[newIndex]
+            });
+        }   
+    }
+
+    render(){    
         return(  
                 <Grid>
                     <Row>
                         <Col>
-                            <Swipeable onSwipedUp={this.swipedUp}>  
+                            <Swipeable onSwipedUp={this.swipedUp} onSwipedRight={this.swipedRight} onSwipedLeft={this.swipedLeft} >  
                                 <div className={this.state.animationClass}>
                                     <User cardValue={this.state.cardValue} userName={this.props.params.userName} />                     
                                 </div>                                      

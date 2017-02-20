@@ -65,6 +65,7 @@ export default class Room extends React.PureComponent{
         for(var i=0;i<newArray.length;i++){
             if(newArray[i].id === user.id){
                 newArray[i].newValue = cardValue;
+                newArray[i].cardValue = 'R';
             }
         }
         var total = this.state.totalOfParticipants;
