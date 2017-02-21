@@ -22,9 +22,10 @@ export default class Room extends React.PureComponent{
     componentDidMount(){
        this.props.updateRoomId(this.props.params.roomId);
 
-        socket.on('user-joined',(userData)=> 
+        socket.on('user-joined',(userData, socketId)=> 
         {
-            this.addUser(userData);
+            console.log('user: ' + userData.name + ' socketId: ' + socketId);
+            this.addUser(userData, socketId);
         });
 
         socket.on('card-sent',(user,cardValue)=>
@@ -32,10 +33,25 @@ export default class Room extends React.PureComponent{
             this.updateUser(user,cardValue);                            
         });
         socket.emit('room', this.props.params.roomId);
+
+        socket.on('socket-disconnected', (socketId) =>
+        {
+            var updatedArray = this.state.users.slice();
+            for(var i=0;i<updatedArray.length;i++){
+                if(updatedArray[i].socketId === socketId){
+                    updatedArray.splice(i,1);
+                    break;
+                }
+            } 
+            this.setState({
+                users: updatedArray
+            });
+        });     
     }
 
-    addUser(newUser){
+    addUser(newUser, socketId){
         var newUserArray = this.state.users.slice();
+        newUser.socketId = socketId;
         newUserArray.push(newUser);
         this.setState({
            users: newUserArray

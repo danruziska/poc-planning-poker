@@ -19,12 +19,17 @@ realtimeListener.on('connection',function(socket){
         socket.join(roomId);
     });
 
-
+    socket.on('disconnect', function(){
+        if(socket){
+            realtimeListener.emit('socket-disconnected',socket.id);
+            console.log('disconnected:' + socket.id);
+        }        
+    });
 
     socket.on('join-room', function(userData, roomId){
         if(socket){
             console.log('emitindo evento user-joined para a sala: ' + roomId);
-            realtimeListener.in(roomId).emit('user-joined', userData);
+            realtimeListener.in(roomId).emit('user-joined', userData, socket.id);
         }
     });
 

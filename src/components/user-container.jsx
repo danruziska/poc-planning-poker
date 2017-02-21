@@ -1,9 +1,7 @@
 import React from 'react';
 import User from './user';
-import styles from '../stylesheets/cards.css';
-import { Grid, Row, Cell } from 'react-inline-grid';
-
-
+import {} from '../stylesheets/cards.css';
+import { Grid, Row } from 'react-inline-grid';
 const Swipeable = require('react-swipeable');
 const io = require('socket.io-client');
 const socket = io('http://localhost:3001');
@@ -57,6 +55,7 @@ export default class UserContainer extends React.PureComponent{
         });    
 
         socket.emit('room', this.props.location.query.roomId); 
+        this.props.updateRoomId(this.props.location.query.roomId);
     }
 
     handlecardValueChange = (event) =>{
