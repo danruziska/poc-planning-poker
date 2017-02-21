@@ -8,7 +8,7 @@ import { randomString } from '../utils/randomString';
 
 const {Grid, Row, Col} = require('react-flexbox-grid');
 const io = require('socket.io-client');
-const socket = io('http://localhost:3001');
+const socket = io('https://poc-planning-poker-api.herokuapp.com/');
 const uuidV4 = require('uuid/v4');
 
 export default class ActionChoice extends React.PureComponent{
