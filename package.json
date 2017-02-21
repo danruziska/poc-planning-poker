@@ -32,10 +32,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "npm run build-css && react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "build-css": "node-sass src/stylesheets/main.scss src/index.css",
-    "watch-css": "nodemon -e scss -x \"npm run build-css\""
+    "eject": "react-scripts eject"
   }
 }
