@@ -4,7 +4,7 @@ import { Grid, Row, Cell } from 'react-inline-grid';
 import RaisedButton from 'material-ui/RaisedButton';
 import { defaultButton } from '../styles/ui-components/button';
 const io = require('socket.io-client');
-const socket = io('http://localhost:3001');
+const socket = io('https://poc-planning-poker-api.herokuapp.com/');
 
 export default class Room extends React.PureComponent{    
     constructor() {
