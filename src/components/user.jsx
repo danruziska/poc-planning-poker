@@ -6,13 +6,13 @@ const cardStyle = {
     borderRadius:'10px',
     textAlign:'center',
     height:'220px',
-    width:'170px'
+    width:'160px'
 }
 
 export default class User extends React.PureComponent{
     render(){ 
         return( 
-            <div style={{margin:'20px', height:'300px', width:'150px'}}>
+            <div style={{marginTop:'20px', height:'300px', width:'170px'}}>
                 <div style={cardStyle}>
                     <span>{this.props.cardValue}</span>
                 </div>

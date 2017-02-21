@@ -1,9 +1,7 @@
 import React from 'react';
 import User from './user';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
 import styles from '../stylesheets/cards.css';
-const {Grid, Row, Col} = require('react-flexbox-grid');
+import { Grid, Row, Cell } from 'react-inline-grid';
 
 
 const Swipeable = require('react-swipeable');
@@ -90,58 +88,37 @@ export default class UserContainer extends React.PureComponent{
 
     swipedRight(){        
         var newIndex = this.state.currentIndex;
-        if(newIndex !== values.length-1){
-            newIndex+=1;
-            this.setState({
-                currentIndex : newIndex,
-                cardValue: values[newIndex]
-            });
-        }
-    }
-
-    swipedLeft(){
-        var newIndex = this.state.currentIndex;
         if(newIndex !== 0){
             newIndex-=1;
             this.setState({
                 currentIndex : newIndex,
                 cardValue: values[newIndex]
             });
-        }   
+        }  
+    }
+
+    swipedLeft(){
+        var newIndex = this.state.currentIndex;
+        if(newIndex !== values.length-1){
+            newIndex+=1;
+            this.setState({
+                currentIndex : newIndex,
+                cardValue: values[newIndex]
+            });
+        } 
     }
 
     render(){    
         return(  
-                <Grid>
-                    <Row>
-                        <Col>
-                            <Swipeable onSwipedUp={this.swipedUp} onSwipedRight={this.swipedRight} onSwipedLeft={this.swipedLeft} >  
-                                <div className={this.state.animationClass}>
-                                    <User cardValue={this.state.cardValue} userName={this.props.params.userName} />                     
-                                </div>                                      
-                            </Swipeable>  
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <SelectField
-                                floatingLabelText="Card Value"
-                                value={this.state.cardValue}
-                                onChange={this.handleChange}
-                                style={styles.customWidth}
-                            >
-                                <MenuItem value={1} primaryText="1" />
-                                <MenuItem value={2} primaryText="2" />
-                                <MenuItem value={3} primaryText="3" />
-                                <MenuItem value={5} primaryText="5" />
-                                <MenuItem value={8} primaryText="8" />
-                                <MenuItem value={13} primaryText="13" />
-                                <MenuItem value={20} primaryText="20" />
-                                <MenuItem value={40} primaryText="40" />
-                            </SelectField> 
-                        </Col>                        
-                    </Row>
-                </Grid>                                                                                         
+            <Grid>
+                <Row is="center">
+                    <div style={{width:'170px'}} className={this.state.animationClass}>
+                        <Swipeable onSwipedUp={this.swipedUp} onSwipedRight={this.swipedRight} onSwipedLeft={this.swipedLeft} >                  
+                            <User cardValue={this.state.cardValue} userName={this.props.params.userName} />                                                                        
+                        </Swipeable>   
+                    </div>   
+                </Row>
+            </Grid>                                                                                
         );
     }
 };
