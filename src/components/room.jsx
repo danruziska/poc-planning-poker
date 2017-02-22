@@ -1,6 +1,6 @@
 import React from 'react';
 import User from './user';
-import { Grid, Row, Cell } from 'react-inline-grid';
+const {Grid, Row, Col} = require('react-flexbox-grid');
 import RaisedButton from 'material-ui/RaisedButton';
 import { defaultButton } from '../styles/ui-components/button';
 const io = require('socket.io-client');
@@ -54,11 +54,8 @@ export default class Room extends React.PureComponent{
         newUser.socketId = socketId;
         newUserArray.push(newUser);
         this.setState({
-           users: newUserArray
-        });
-
-        this.setState({
-            totalUsersInRoom:this.state.users.length
+           users: newUserArray,
+           totalUsersInRoom:newUserArray.length
         });
     } 
 
@@ -111,7 +108,7 @@ export default class Room extends React.PureComponent{
     
     render(){           
         const usersList = this.state.users.map((user) =>
-            <Cell key={user.id} is="3 tablet-4 phone-4"><User userName={user.name} cardValue={user.cardValue} /></Cell>
+            <Col key={user.id} is="3 tablet-4 phone-4"><User userName={user.name} cardValue={user.cardValue} /></Col>
         );
     
         return(   

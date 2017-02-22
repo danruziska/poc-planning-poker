@@ -1,7 +1,7 @@
 import React from 'react';
 import User from './user';
 import {} from '../stylesheets/cards.css';
-import { Grid, Row } from 'react-inline-grid';
+const {Grid, Row} = require('react-flexbox-grid');
 const Swipeable = require('react-swipeable');
 const io = require('socket.io-client');
 const socket = io('https://poc-planning-poker-api.herokuapp.com/');
